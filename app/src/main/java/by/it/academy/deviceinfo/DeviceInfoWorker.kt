@@ -22,6 +22,6 @@ class DeviceInfoWorker(context: Context, workerParams: WorkerParameters) : Worke
             .then(memoryInfoWorkRequest)
             .enqueue()
 
-        return Result.retry()
+        return Result.success()
     }
 }
