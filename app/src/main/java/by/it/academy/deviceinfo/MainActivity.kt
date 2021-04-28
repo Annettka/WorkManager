@@ -13,16 +13,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val deviceInfoWorkRequest =
-            PeriodicWorkRequestBuilder<DeviceInfoWorker>(1, TimeUnit.HOURS, 58, TimeUnit.MINUTES)
-                .setInitialDelay(1, TimeUnit.HOURS)
-                .build()
 
         val button = findViewById<Button>(R.id.device_info)
         button.setOnClickListener {
 
-            WorkManager.getInstance(this)
-                .enqueue(deviceInfoWorkRequest)
+
+            val deviceInfoWorkRequest =
+                PeriodicWorkRequestBuilder<DeviceInfoWorker>(1, TimeUnit.HOURS, 58, TimeUnit.MINUTES)
+                    .setInitialDelay(1, TimeUnit.HOURS)
+                    .build()
+
+            WorkManager.getInstance()
+                .enqueueUniquePeriodicWork("periodic", ExistingPeriodicWorkPolicy.REPLACE, deviceInfoWorkRequest)
 
         }
     }

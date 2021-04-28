@@ -17,11 +17,11 @@ class DeviceInfoWorker(context: Context, workerParams: WorkerParameters) : Worke
                 .setInitialDelay(4, TimeUnit.SECONDS)
                 .build()
 
-        WorkManager.getInstance(applicationContext)
+        WorkManager.getInstance()
             .beginWith(batteryInfoWorkRequest)
             .then(memoryInfoWorkRequest)
             .enqueue()
 
-        return Result.success()
+        return Result.retry()
     }
 }
